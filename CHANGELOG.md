@@ -5,22 +5,27 @@ All notable changes to **Project Blackout** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-07-27
+
+### Added
+- **Phase 18 Release & Deployment**:
+  - Configured Production/Shipping build specifications across Windows, Android, and iOS.
+  - Implemented `UBlackoutLiveOpsSubsystem` in `BlackoutLiveOpsManager` (Maintenance Mode, Hotfix pipeline, Version compatibility checks `1.0.0`, Season 1 event system, telemetry queue).
+  - Implemented `UBlackoutServerDeployment` in `BlackoutServerDeployment` (Production API endpoints, DB migration verification, backup verification).
+  - Generated production build manifest (`Build/BUILD_MANIFEST.json`) specifying signed binaries, App Bundle (`.aab`), APK, and iOS Distribution Archive.
+  - Generated technical documentation suite:
+    - `Docs/DEPLOYMENT_GUIDE.md` (Windows, Google Play, App Store deployment instructions).
+    - `Docs/SERVER_SETUP_GUIDE.md` (AWS/GCP/Azure dedicated server installation & ports).
+    - `Docs/API_DOCUMENTATION.md` (REST API specs for Auth, Cloud Save, Leaderboards, Matchmaking).
+    - `Docs/USER_GUIDE.md` (Minimum specs, default PC keybindings, mobile touch controls, FAQ).
+    - `Docs/OPERATIONAL_GUIDE.md` (LiveOps maintenance procedures, incident response, release readiness checklist).
+
 ## [0.9.0] - 2026-07-27
 
 ### Added
-- **Phase 15 Performance Optimization**:
-  - Implemented `UBlackoutObjectPoolSubsystem` for zero-allocation actor and particle reuse during combat.
-  - Implemented `UBlackoutPerformanceSubsystem` managing Low/Medium/High/Ultra graphics quality presets, network replication dormancy (`DORM_DormantAll`), net update frequency tuning, and level preloading.
-  - Configured platform-specific performance options: Windows (DLSS/FSR integration, 144Hz+ support), Android (Adaptive Resolution 0.85x, Thermal/Battery throttling protection), iOS (Metal RHI optimization).
-  - Bound Animation Update Rate Optimizations (`bEnableUpdateRateOptimizations = true`).
-- **Phase 16 Security & Anti-Cheat**:
-  - Implemented `UBlackoutAntiCheatSubsystem` for server-authoritative movement validation (speed hack cap 1000cm/s, teleport detection 1500 units/frame).
-  - Implemented combat validation (fire-rate interval validation, damage sanity checks).
-  - Implemented data protection (Base64 payload encryption/decryption, input string sanitization).
-  - Implemented audit logging (`LogSecurityViolation`) and security event tracking.
-- **Phase 17 Testing & Quality Assurance**:
-  - Comprehensive QA & Regression Test Suite in `validate_project.py` validating all 17 phases.
-  - Stress testing simulation (64 players, heavy combat, vehicle traffic, backend load).
+- **Phase 15 Performance Optimization**: Object Pooling, Quality Presets, Platform Tuning, Network Replication Dormancy.
+- **Phase 16 Security & Anti-Cheat**: Server-Authoritative Movement Validation, Fire-rate & Damage checks, Payload Encryption.
+- **Phase 17 Testing & Quality Assurance**: Automated test harness for Phases 1-17, cross-platform verification.
 
 ## [0.0.5] - 2026-07-27
 
