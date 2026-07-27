@@ -8,12 +8,16 @@ Intermediate/
 DerivedDataCache/
 FileOpenOrder/
 
-# Build & Release Output Artifacts (Keep Manifests tracked)
+# Build & Release Output Artifacts
 Build/*
 !Build/BUILD_MANIFEST.json
 Release/*
 !Release/RELEASE_MANIFEST.txt
 !Release/Windows/Manifest.json
+!Release/Windows/ProjectBlackout.exe
+!Release/Windows/Content/Paks/ProjectBlackout-Windows.pak
+!Release/Android/ProjectBlackout.apk
+!Release/Android/ProjectBlackout.aab
 
 # User-specific & IDE files
 .vs/
