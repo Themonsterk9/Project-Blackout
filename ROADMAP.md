@@ -11,44 +11,58 @@ This document outlines the phased development plan for **Project Blackout**, an 
 - [x] Configure platform-specific targets (Windows, Android, iOS).
 - [x] Initialize Git repository & version control files (`.gitignore`, `LICENSE`, `README.md`).
 - [x] Build complete asset folder hierarchy in `Content/`.
-- [x] Comprehensive documentation & validation test script.
 
 ---
 
-## Phase 2 — Core Character & Camera Systems (Upcoming)
-- [ ] Implement FPP / TPP camera spring arm component with smooth transition logic.
-- [ ] Base Tactical Character C++ class with locomotion state machine.
-- [ ] Advanced movement: Stance switching (Stand, Crouch, Prone), Sprinting, Leaning (Left/Right).
-- [ ] Character animation interface & stamina/health attribute components.
+## Phase 2 — Core Character & Locomotion Systems (Completed)
+- [x] Implement FPP / TPP camera spring arm component with smooth transition logic.
+- [x] Base Tactical Character C++ class with 13-state locomotion state machine (`EBlackoutCharacterState`).
+- [x] Stances: Standing, Crouching, Prone, Crawling.
+- [x] Advanced movement: Sprinting, Sliding, Climbing, Vaulting.
+- [x] Custom Animation Instance `UBlackoutAnimInstance` & `ABlackoutPlayerController`.
 
 ---
 
-## Phase 3 — Ballistics & Modular Weapon Framework (Upcoming)
-- [ ] Modular Weapon Base class with attachment socket system.
-- [ ] Realistic projectile ballistics (bullet drop, velocity curves, drag, penetration).
-- [ ] Recoil patterns, weapon sway, and spread mechanics.
-- [ ] Reloading states, ammo inventory management, and weapon switching.
+## Phase 3 — Camera System (Completed)
+- [x] FPP (Head view) & TPP (Left/Right Shoulder) views.
+- [x] Camera Manager & Camera Component (`UBlackoutCameraComponent`).
+- [x] Procedural Head Bob, Landing Camera Shake, FOV interpolation.
+- [x] Camera collision probe & obstacle avoidance.
+- [x] Configurable Mouse, Controller, and Touch sensitivity settings.
 
 ---
 
-## Phase 4 — Online Multiplayer & Networking Infrastructure (Upcoming)
-- [ ] Dedicated Server target rules & lobby matchmaking logic.
-- [ ] Network replication for character movement, weapon states, and player inventory.
-- [ ] Client-side prediction & lag compensation routines.
-- [ ] In-game voice chat & squad communication channels via OnlineSubsystem.
+## Phase 4 — Combat System (Completed)
+- [x] Weapon Base Class (`ABlackoutWeaponBase`) & Weapon Manager (`UBlackoutWeaponManagerComponent`).
+- [x] Fire Modes: Single, Burst, Automatic.
+- [x] Hitscan & Ballistic bullet trajectory mechanics.
+- [x] Damage System with Headshot (2.5x), Limb (0.75x) multipliers & Armor absorption (70%).
+- [x] Tactical & Empty Reloading, Vertical/Horizontal Recoil, ADS zoom.
+- [x] Melee Component (`UBlackoutMeleeComponent`) & Tactical Throwable Grenades (`ABlackoutThrowable`).
+- [x] Health & Armor System (`UBlackoutHealthComponent`) with death & respawn delegates.
 
 ---
 
-## Phase 5 — Tactical UI, Audio, & Map Environments (Upcoming)
-- [ ] Slate/UMG Tactical HUD (Mini-map, Ammo counter, Health/Stamina bars, Kill feed).
-- [ ] Main Menu system, graphics/audio setting menus, and server browser.
-- [ ] Spatial 3D audio occlusion & dynamic footstep sound surfaces.
-- [ ] Level design greyboxing, tactical cover placement, and lighting optimization.
+## Phase 5 — Multiplayer Framework (Completed)
+- [x] Dedicated Server GameMode (`ABlackoutGameMode`).
+- [x] Replicated GameState (`ABlackoutGameState`) & PlayerState (`ABlackoutPlayerState`).
+- [x] Network Session Manager (`UBlackoutSessionManager`) for Lobby, Quick Match, Custom Matches, Friends, Party, and Team Voice.
+- [x] Network replication across Movement, Camera, Weapon States, and Health.
 
 ---
 
-## Phase 6 — Polishing, Optimization, & Multiplatform Packaging (Upcoming)
-- [ ] Mobile touch controls & HUD layout adaptation for Android / iOS.
-- [ ] Nanite & Lumen performance profiling and shader optimization.
-- [ ] Anti-cheat integration & security auditing.
+## Phase 6 — Maps & Environment Framework (Completed)
+- [x] Level Data Assets (`UBlackoutMapDataAsset`) for:
+  - Training Ground
+  - Small MP Map (Factory)
+  - Medium MP Map (District)
+  - Large Open World Map
+  - Battle Royale Map (Island)
+- [x] Team Spawn System (`ABlackoutSpawnPoint`).
+- [x] Environmental System (`ABlackoutEnvironmentSystem`) for Day/Night cycles, Weather parameters (`Clear`, `Rain`, `Fog`, `Storm`), and lighting.
+
+---
+
+## Phase 7 — UI, Audio, & Production Packaging (Next Phase)
+- [ ] Tactical Slate/UMG HUD (Minimap, Ammo, Health, Kill Feed).
 - [ ] Production build packaging for Windows, Google Play, and Apple App Store.

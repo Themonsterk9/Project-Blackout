@@ -2,15 +2,30 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/World.h"
-#include "DrawDebugHelpers.h"
 
 ABlackoutCharacter::ABlackoutCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true;
 
 	// Set capsule size
 	GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("PlayerCharacter"));
+
+	// Create SpringArm and Camera Components
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
+	SpringArmComponent->SetupAttachment(RootComponent);
+	SpringArmComponent->TargetArmLength = 0.0f;
+	SpringArmComponent->bUsePawnControlRotation = true;
+
+	CameraComponent = CreateDefaultSubobject<UBlackoutCameraComponent>(TEXT("CameraComp"));
+	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
+	CameraComponent->SpringArmRef = SpringArmComponent;
+
+	// Create Combat Components
+	WeaponManagerComponent = CreateDefaultSubobject<UBlackoutWeaponManagerComponent>(TEXT("WeaponManagerComp"));
+	MeleeComponent = CreateDefaultSubobject<UBlackoutMeleeComponent>(TEXT("MeleeComp"));
+	HealthComponent = CreateDefaultSubobject<UBlackoutHealthComponent>(TEXT("HealthComp"));
 
 	// Configure character movement
 	UCharacterMovementComponent* MoveComp = GetCharacterMovement();
@@ -43,7 +58,6 @@ void ABlackoutCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// Update movement state based on current velocity if grounded
 	if (GetCharacterMovement()->IsFalling())
 	{
 		if (CurrentState != EBlackoutCharacterState::Jumping && CurrentState != EBlackoutCharacterState::Vaulting && CurrentState != EBlackoutCharacterState::Climbing)
@@ -95,11 +109,23 @@ void ABlackoutCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Slide", IE_Pressed, this, &ABlackoutCharacter::StartSlide);
 	PlayerInputComponent->BindAction("Vault", IE_Pressed, this, &ABlackoutCharacter::TryVault);
 	PlayerInputComponent->BindAction("Climb", IE_Pressed, this, &ABlackoutCharacter::TryClimb);
+
+	// Combat Input Bindings
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ABlackoutCharacter::StartFire);
+	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ABlackoutCharacter::StopFire);
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &ABlackoutCharacter::StartReload);
+	PlayerInputComponent->BindAction("Melee", IE_Pressed, this, &ABlackoutCharacter::PerformMelee);
+	PlayerInputComponent->BindAction("ToggleCamera", IE_Pressed, this, &ABlackoutCharacter::TogglePerspective);
+}
+
+void ABlackoutCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ABlackoutCharacter, CurrentState);
 }
 
 bool ABlackoutCharacter::CanTransitionToState(EBlackoutCharacterState NewState) const
 {
-	// Disallow jumping or sprinting from Prone or Climbing without exiting first
 	if (CurrentState == EBlackoutCharacterState::Prone || CurrentState == EBlackoutCharacterState::Crawling)
 	{
 		if (NewState == EBlackoutCharacterState::Jumping || NewState == EBlackoutCharacterState::Sprinting || NewState == EBlackoutCharacterState::Sliding)
@@ -266,7 +292,6 @@ void ABlackoutCharacter::TryVault()
 		FHitResult HighHit;
 		if (!TraceObstacle(120.0f, 40.0f, HighHit))
 		{
-			// Low obstacle detected, perform vault
 			SetCharacterState(EBlackoutCharacterState::Vaulting);
 			LaunchCharacter(FVector(0, 0, 450.0f) + GetActorForwardVector() * 300.0f, true, true);
 		}
@@ -294,6 +319,46 @@ bool ABlackoutCharacter::TraceObstacle(float TraceDistance, float EyeHeightOffse
 	return GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, QueryParams);
 }
 
+void ABlackoutCharacter::StartFire()
+{
+	if (WeaponManagerComponent)
+	{
+		WeaponManagerComponent->StartFireActiveWeapon();
+	}
+}
+
+void ABlackoutCharacter::StopFire()
+{
+	if (WeaponManagerComponent)
+	{
+		WeaponManagerComponent->StopFireActiveWeapon();
+	}
+}
+
+void ABlackoutCharacter::StartReload()
+{
+	if (WeaponManagerComponent)
+	{
+		WeaponManagerComponent->ReloadActiveWeapon();
+	}
+}
+
+void ABlackoutCharacter::PerformMelee()
+{
+	if (MeleeComponent)
+	{
+		MeleeComponent->PerformMeleeAttack();
+	}
+}
+
+void ABlackoutCharacter::TogglePerspective()
+{
+	if (CameraComponent)
+	{
+		CameraComponent->TogglePerspective();
+	}
+}
+
 void ABlackoutCharacter::Jump()
 {
 	if (CurrentState != EBlackoutCharacterState::Prone && CurrentState != EBlackoutCharacterState::Crawling && CurrentState != EBlackoutCharacterState::Sliding)
@@ -307,4 +372,8 @@ void ABlackoutCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
 	SetCharacterState(EBlackoutCharacterState::Landing);
+	if (CameraComponent)
+	{
+		CameraComponent->DoLandingCameraShake(GetVelocity().Z);
+	}
 }

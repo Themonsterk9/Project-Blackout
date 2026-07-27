@@ -3,10 +3,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "BlackoutCharacterState.h"
+#include "BlackoutCameraComponent.h"
+#include "BlackoutWeaponManager.h"
+#include "BlackoutMeleeComponent.h"
+#include "BlackoutHealthComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "BlackoutCharacter.generated.h"
-
-class UCameraComponent;
-class USpringArmComponent;
 
 UCLASS(Config=Game)
 class PROJECTBLACKOUT_API ABlackoutCharacter : public ACharacter
@@ -21,10 +24,27 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Landed(const FHitResult& Hit) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:
+	/** Integrated Components */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Camera")
+	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Camera")
+	UBlackoutCameraComponent* CameraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Combat")
+	UBlackoutWeaponManagerComponent* WeaponManagerComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Combat")
+	UBlackoutMeleeComponent* MeleeComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Health")
+	UBlackoutHealthComponent* HealthComponent;
+
 	/** Current Movement & Locomotion State */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Movement State")
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Blackout | Movement State")
 	EBlackoutCharacterState CurrentState;
 
 	/** Configurable Movement & Capsule Parameters */
@@ -76,15 +96,28 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Blackout | Actions")
 	void TryClimb();
 
-	/** Custom Jump Override */
+	/** Combat Actions */
+	UFUNCTION(BlueprintCallable, Category = "Blackout | Combat Actions")
+	void StartFire();
+
+	UFUNCTION(BlueprintCallable, Category = "Blackout | Combat Actions")
+	void StopFire();
+
+	UFUNCTION(BlueprintCallable, Category = "Blackout | Combat Actions")
+	void StartReload();
+
+	UFUNCTION(BlueprintCallable, Category = "Blackout | Combat Actions")
+	void PerformMelee();
+
+	UFUNCTION(BlueprintCallable, Category = "Blackout | Camera Actions")
+	void TogglePerspective();
+
 	virtual void Jump() override;
 
 private:
-	/** Slide State Internal */
 	float SlideDurationTimer;
 	FVector SlideDirection;
 
-	/** Internal Helper Routines */
 	void UpdateSlide(float DeltaTime);
 	bool TraceObstacle(float TraceDistance, float EyeHeightOffset, FHitResult& OutHit) const;
 };
