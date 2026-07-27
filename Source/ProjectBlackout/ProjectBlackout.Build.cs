@@ -17,7 +17,8 @@ public class ProjectBlackout : ModuleRules
 			"PhysicsCore",
 			"NavigationSystem",
 			"Slate",
-			"SlateCore"
+			"SlateCore",
+			"GameplayTasks"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
