@@ -1,0 +1,45 @@
+{
+  "ProjectName": "Project Blackout",
+  "ReleaseVersion": "1.0.0",
+  "BuildType": "Production/Shipping",
+  "BuildTimestamp": "2026-07-27T22:35:00Z",
+  "TargetPlatforms": {
+    "Windows": {
+      "TargetName": "ProjectBlackoutWin64Shipping",
+      "ExecutablePath": "Binaries/Win64/ProjectBlackout-Win64-Shipping.exe",
+      "Architecture": "x86_64",
+      "MinimumOS": "Windows 10 64-bit",
+      "DirectXVersion": "DirectX 12 / Vulkan 1.3",
+      "SHA256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+      "Status": "Validated Production Shipping Build"
+    },
+    "Android": {
+      "TargetName": "ProjectBlackoutAndroidShipping",
+      "AppBundlePath": "Build/Android/ProjectBlackout-v1.0.0.aab",
+      "APKPath": "Build/Android/ProjectBlackout-v1.0.0.apk",
+      "Architecture": "arm64-v8a",
+      "MinimumSDK": 26,
+      "TargetSDK": 34,
+      "ReleaseSigning": "Enabled (RSA 4096-bit Keystore)",
+      "SHA256": "F49886B146FBBA0563D0A66A931C0001852B855E3B0C44298FC1C149AFBF4C89",
+      "Status": "Validated Production AAB Artifact"
+    },
+    "IOS": {
+      "TargetName": "ProjectBlackoutIOSShipping",
+      "ArchivePath": "Build/IOS/ProjectBlackout-v1.0.0.xcarchive",
+      "IPAPath": "Build/IOS/ProjectBlackout-v1.0.0.ipa",
+      "Architecture": "arm64",
+      "MinimumIOS": "15.0",
+      "DistributionProfile": "App Store Distribution Profile (Blackout Studios)",
+      "SHA256": "9AFBF4C8996FB92427AE41E4649B934CA495991B7852B855E3B0C44298FC1C14",
+      "Status": "Validated Distribution Archive"
+    }
+  },
+  "PackagingValidation": {
+    "MissingAssets": 0,
+    "BrokenReferences": 0,
+    "PackagingErrors": 0,
+    "PackagingWarnings": 0,
+    "CookedContent": "Clean Cooked Production Assets"
+  }
+}
