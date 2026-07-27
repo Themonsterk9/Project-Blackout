@@ -2,6 +2,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/World.h"
+#include "BlackoutSecurityManager.h"
 
 ABlackoutCharacter::ABlackoutCharacter()
 {
@@ -41,6 +42,9 @@ ABlackoutCharacter::ABlackoutCharacter()
 		MoveComp->BrakingDecelerationWalking = 2048.0f;
 		MoveComp->GroundFriction = 8.0f;
 		MoveComp->GetNavAgentPropertiesRef().bCanCrouch = true;
+
+		// Performance Optimization: Update Rate Optimizations
+		MoveComp->bEnableUpdateRateOptimizations = true;
 	}
 
 	CurrentState = EBlackoutCharacterState::Idle;
@@ -57,6 +61,20 @@ void ABlackoutCharacter::BeginPlay()
 void ABlackoutCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// Validate movement on server for anti-cheat
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		UGameInstance* GI = GetGameInstance();
+		if (GI)
+		{
+			UBlackoutAntiCheatSubsystem* AntiCheat = GI->GetSubsystem<UBlackoutAntiCheatSubsystem>();
+			if (AntiCheat)
+			{
+				AntiCheat->ValidateMovement(this, GetActorLocation(), DeltaTime);
+			}
+		}
+	}
 
 	if (GetCharacterMovement()->IsFalling())
 	{
