@@ -8,9 +8,12 @@ Intermediate/
 DerivedDataCache/
 FileOpenOrder/
 
-# Build Output Artifacts (Keep BUILD_MANIFEST.json tracked)
+# Build & Release Output Artifacts (Keep Manifests tracked)
 Build/*
 !Build/BUILD_MANIFEST.json
+Release/*
+!Release/RELEASE_MANIFEST.txt
+!Release/Windows/Manifest.json
 
 # User-specific & IDE files
 .vs/

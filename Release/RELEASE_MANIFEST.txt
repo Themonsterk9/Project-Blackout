@@ -1,0 +1,15 @@
+# Project Blackout - Multiplatform Release Directory Manifest
+
+This file documents the release artifact directory structure generated for Project Blackout v1.0.0.
+
+Directory Hierarchy:
+Release/
+├── Windows/
+│   ├── ProjectBlackout.exe
+│   ├── ReleaseNotes.txt
+│   └── Manifest.json
+├── Android/
+│   ├── ProjectBlackout.apk
+│   └── ProjectBlackout.aab
+└── iOS/
+    └── ProjectBlackout.ipa
