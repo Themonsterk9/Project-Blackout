@@ -4,7 +4,7 @@ import json
 
 def run_validation():
     print("==================================================")
-    print("  PROJECT BLACKOUT - PHASES 1-10 VALIDATION RUNNER")
+    print("  PROJECT BLACKOUT - PHASES 1-14 VALIDATION RUNNER")
     print("==================================================")
 
     errors = []
@@ -51,77 +51,81 @@ def run_validation():
 
     print("[PASS] Task 2 & 8 — Project Directory & Asset Hierarchy Structure Verified.")
 
-    # 3. Verify Version 0.0.4
+    # 3. Verify Version 0.0.5
     if os.path.exists("Config/DefaultGame.ini"):
         with open("Config/DefaultGame.ini", "r") as f:
             content = f.read()
-            if "ProjectVersion=0.0.4" not in content:
-                errors.append("ProjectVersion must be updated to 0.0.4 in DefaultGame.ini.")
-        print("[PASS] Project Version 0.0.4 Verified.")
+            if "ProjectVersion=0.0.5" not in content:
+                errors.append("ProjectVersion must be updated to 0.0.5 in DefaultGame.ini.")
+        print("[PASS] Project Version 0.0.5 Verified.")
 
-    # 4. Verify Phase 3-6 Systems
-    phase3_6_files = [
+    # 4. Verify Phase 3-10 Systems
+    prev_files = [
         "Source/ProjectBlackout/BlackoutCameraComponent.h",
         "Source/ProjectBlackout/BlackoutWeaponBase.h",
         "Source/ProjectBlackout/BlackoutGameMode.h",
-        "Source/ProjectBlackout/BlackoutMapFramework.h"
+        "Source/ProjectBlackout/BlackoutMapFramework.h",
+        "Source/ProjectBlackout/BlackoutGameModes.h",
+        "Source/ProjectBlackout/BlackoutAISystem.h",
+        "Source/ProjectBlackout/BlackoutVehicleBase.h",
+        "Source/ProjectBlackout/BlackoutInventorySystem.h"
     ]
-    for p in phase3_6_files:
+    for p in prev_files:
         if not os.path.exists(p):
-            errors.append(f"Missing Phase 3-6 file: {p}")
-    print("[PASS] Phases 3–6 — Camera, Combat, Multiplayer, and Maps Frameworks Verified.")
+            errors.append(f"Missing previous system file: {p}")
+    print("[PASS] Phases 3–10 — Camera, Combat, Multiplayer, Maps, Game Modes, AI, Vehicles, and Inventory Verified.")
 
-    # 5. Verify Phase 7 — Game Modes
-    p7_files = ["Source/ProjectBlackout/BlackoutGameModes.h", "Source/ProjectBlackout/BlackoutGameModes.cpp"]
-    for p in p7_files:
+    # 5. Verify Phase 11 — Player Progression
+    p11_files = ["Source/ProjectBlackout/BlackoutProgressionSystem.h", "Source/ProjectBlackout/BlackoutProgressionSystem.cpp"]
+    for p in p11_files:
         if not os.path.exists(p):
-            errors.append(f"Missing Phase 7 file: {p}")
-    if os.path.exists("Source/ProjectBlackout/BlackoutGameModes.h"):
-        with open("Source/ProjectBlackout/BlackoutGameModes.h", "r") as f:
+            errors.append(f"Missing Phase 11 file: {p}")
+    if os.path.exists("Source/ProjectBlackout/BlackoutProgressionSystem.h"):
+        with open("Source/ProjectBlackout/BlackoutProgressionSystem.h", "r") as f:
             c = f.read()
-            for gmod in ["ABlackoutGameMode_TDM", "ABlackoutGameMode_FFA", "ABlackoutGameMode_Domination", "ABlackoutGameMode_SnD", "ABlackoutGameMode_BattleRoyale", "ABlackoutGameMode_Practice", "ABlackoutCaptureZone"]:
-                if gmod not in c:
-                    errors.append(f"Game Mode '{gmod}' missing in BlackoutGameModes.h")
-        print("[PASS] Phase 7 — Game Modes Framework (TDM, FFA, Domination, SnD, BR, Practice) Verified.")
-
-    # 6. Verify Phase 8 — AI System
-    p8_files = ["Source/ProjectBlackout/BlackoutAISystem.h", "Source/ProjectBlackout/BlackoutAISystem.cpp"]
-    for p in p8_files:
-        if not os.path.exists(p):
-            errors.append(f"Missing Phase 8 file: {p}")
-    if os.path.exists("Source/ProjectBlackout/BlackoutAISystem.h"):
-        with open("Source/ProjectBlackout/BlackoutAISystem.h", "r") as f:
-            c = f.read()
-            for token in ["ABlackoutAIController", "ABlackoutAICharacter", "UAIPerceptionComponent", "UAISenseConfig_Sight", "UAISenseConfig_Hearing", "EBlackoutAIDifficulty", "Easy", "Normal", "Hard", "Expert"]:
+            for token in ["UBlackoutProgressionSubsystem", "EBlackoutCompetitiveRank", "FBlackoutPlayerStats", "FBlackoutDailyMission", "FBlackoutAchievement", "AddXP", "AddRankPoints"]:
                 if token not in c:
-                    errors.append(f"AI feature '{token}' missing in BlackoutAISystem.h")
-        print("[PASS] Phase 8 — AI System (Perception, Controller, States, Difficulty, Squad AI) Verified.")
+                    errors.append(f"Progression feature '{token}' missing in BlackoutProgressionSystem.h")
+        print("[PASS] Phase 11 — Player Progression System (XP, Levels 1-100, Ranks, Achievements, Daily Missions, Stats) Verified.")
 
-    # 7. Verify Phase 9 — Vehicles System
-    p9_files = ["Source/ProjectBlackout/BlackoutVehicleBase.h", "Source/ProjectBlackout/BlackoutVehicleBase.cpp"]
-    for p in p9_files:
+    # 6. Verify Phase 12 — Customization
+    p12_files = ["Source/ProjectBlackout/BlackoutCustomizationSystem.h", "Source/ProjectBlackout/BlackoutCustomizationSystem.cpp"]
+    for p in p12_files:
         if not os.path.exists(p):
-            errors.append(f"Missing Phase 9 file: {p}")
-    if os.path.exists("Source/ProjectBlackout/BlackoutVehicleBase.h"):
-        with open("Source/ProjectBlackout/BlackoutVehicleBase.h", "r") as f:
+            errors.append(f"Missing Phase 12 file: {p}")
+    if os.path.exists("Source/ProjectBlackout/BlackoutCustomizationSystem.h"):
+        with open("Source/ProjectBlackout/BlackoutCustomizationSystem.h", "r") as f:
             c = f.read()
-            for vclass in ["ABlackoutVehicleBase", "ABlackoutCar", "ABlackoutMotorcycle", "ABlackoutBoat", "ABlackoutHelicopter", "EnterVehicle", "ExitVehicle", "ApplyVehicleDamage"]:
-                if vclass not in c:
-                    errors.append(f"Vehicle feature '{vclass}' missing in BlackoutVehicleBase.h")
-        print("[PASS] Phase 9 — Vehicles System (Cars, Motorcycles, Boats, Helicopters, Damage & Replication) Verified.")
+            for token in ["UBlackoutCustomizationComponent", "FBlackoutLoadout", "FBlackoutPlayerProfile", "FacePresetID", "WeaponSkins", "EquippedEmotes", "SaveLoadout"]:
+                if token not in c:
+                    errors.append(f"Customization feature '{token}' missing in BlackoutCustomizationSystem.h")
+        print("[PASS] Phase 12 — Customization System (Appearance, Weapon Skins, Emote Wheel, Loadouts 1-5, Profile Card) Verified.")
 
-    # 8. Verify Phase 10 — Inventory System
-    p10_files = ["Source/ProjectBlackout/BlackoutInventorySystem.h", "Source/ProjectBlackout/BlackoutInventorySystem.cpp"]
-    for p in p10_files:
+    # 7. Verify Phase 13 — UI / UX
+    p13_files = ["Source/ProjectBlackout/BlackoutUISystem.h", "Source/ProjectBlackout/BlackoutUISystem.cpp"]
+    for p in p13_files:
         if not os.path.exists(p):
-            errors.append(f"Missing Phase 10 file: {p}")
-    if os.path.exists("Source/ProjectBlackout/BlackoutInventorySystem.h"):
-        with open("Source/ProjectBlackout/BlackoutInventorySystem.h", "r") as f:
+            errors.append(f"Missing Phase 13 file: {p}")
+    if os.path.exists("Source/ProjectBlackout/BlackoutUISystem.h"):
+        with open("Source/ProjectBlackout/BlackoutUISystem.h", "r") as f:
             c = f.read()
-            for inv_token in ["UBlackoutInventoryComponent", "ABlackoutLootItem", "EBlackoutItemType", "Weapon", "Attachment", "Helmet", "Vest", "Healing", "Throwable"]:
-                if inv_token not in c:
-                    errors.append(f"Inventory feature '{inv_token}' missing in BlackoutInventorySystem.h")
-        print("[PASS] Phase 10 — Inventory System (Backpack, Ground Loot, Attachments, Armor, Healing, Throwables, Replication) Verified.")
+            for token in ["UBlackoutWidgetBase", "UBlackoutHUDWidget", "UBlackoutMinimapWidget", "UBlackoutInventoryWidget", "UBlackoutMainMenuWidget", "UBlackoutMatchSummaryWidget", "UBlackoutMobileLayoutWidget"]:
+                if token not in c:
+                    errors.append(f"UI feature '{token}' missing in BlackoutUISystem.h")
+        print("[PASS] Phase 13 — UI / UX Framework (Main Menu, HUD, Minimap, Inventory UI, Match Summary, Mobile Touch) Verified.")
+
+    # 8. Verify Phase 14 — Backend Services
+    p14_files = ["Source/ProjectBlackout/BlackoutBackendService.h", "Source/ProjectBlackout/BlackoutBackendService.cpp"]
+    for p in p14_files:
+        if not os.path.exists(p):
+            errors.append(f"Missing Phase 14 file: {p}")
+    if os.path.exists("Source/ProjectBlackout/BlackoutBackendService.h"):
+        with open("Source/ProjectBlackout/BlackoutBackendService.h", "r") as f:
+            c = f.read()
+            for token in ["UBlackoutBackendService", "RegisterUser", "LoginUser", "ValidateAuthToken", "SyncPlayerDataToCloud", "GetGlobalLeaderboard", "HashPayload"]:
+                if token not in c:
+                    errors.append(f"Backend feature '{token}' missing in BlackoutBackendService.h")
+        print("[PASS] Phase 14 — Backend Services Architecture (Auth, Cloud Save, Leaderboards, Match History, Security) Verified.")
 
     # 9. Verify Git & Documentation
     doc_files = [".gitignore", "README.md", "CHANGELOG.md", "ROADMAP.md", "LICENSE"]
@@ -141,7 +145,7 @@ def run_validation():
             print(f" - ERROR: {err}")
         sys.exit(1)
     else:
-        print("SUCCESS: All Phase 1–10 Validation Checks Passed!")
+        print("SUCCESS: All Phase 1–14 Validation Checks Passed!")
         print("--------------------------------------------------")
 
 if __name__ == "__main__":

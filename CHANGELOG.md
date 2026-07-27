@@ -5,45 +5,32 @@ All notable changes to **Project Blackout** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5] - 2026-07-27
+
+### Added
+- **Phase 11 Player Progression**:
+  - Implemented `UBlackoutProgressionSubsystem` handling Level 1-100 XP calculation, competitive ranking (`Bronze`, `Silver`, `Gold`, `Platinum`, `Diamond`, `Master`, `Grandmaster`), Daily Mission generation & reset, Achievement tracking, and lifetime player statistics accumulation.
+- **Phase 12 Customization**:
+  - Implemented `UBlackoutCustomizationComponent` managing character appearance presets (face, skin tone, hair, outfits), weapon skin equipping & persistence, 8-slot emote wheel, 5 loadout slots (with save/load methods), and player profile card data.
+- **Phase 13 UI / UX**:
+  - Implemented `UBlackoutWidgetBase` Slate/UMG base widget framework.
+  - Implemented `UBlackoutHUDWidget`, `UBlackoutMinimapWidget`, `UBlackoutInventoryWidget`, `UBlackoutMainMenuWidget`, `UBlackoutMatchSummaryWidget`, and `UBlackoutMobileLayoutWidget` (touch overlay, dynamic button layout, device auto-scaling).
+- **Phase 14 Backend Services**:
+  - Implemented `UBlackoutBackendService` game instance subsystem.
+  - Features: Account Registration/Login/Auth token validation, Cloud Save data sync, Global/Regional/Friends Leaderboards, Match History logging, payload MD5 security hashing, and rate limiting framework.
+
 ## [0.0.4] - 2026-07-27
 
 ### Added
-- **Phase 7 Game Modes**:
-  - Implemented `ABlackoutGameMode_TDM` (Team Deathmatch: team creation, kill scores, win conditions).
-  - Implemented `ABlackoutGameMode_FFA` (Free For All: individual score tracking, kill limits).
-  - Implemented `ABlackoutGameMode_Domination` (Domination: `ABlackoutCaptureZone` capture progress, ownership, score accumulation).
-  - Implemented `ABlackoutGameMode_SnD` (Search & Destroy: bomb plant/defuse timers, round switching, elimination win condition).
-  - Implemented `ABlackoutGameMode_BattleRoyale` (Battle Royale: player deployment, safe-zone shrinking, last player standing logic).
-  - Implemented `ABlackoutGameMode_Practice` (Offline Practice Mode with AI bot spawning).
-- **Phase 8 AI System**:
-  - Implemented `ABlackoutAIController` & `ABlackoutAICharacter`.
-  - Configured perception system (`UAIPerceptionComponent`) with Sight & Hearing senses (`UAISenseConfig_Sight`, `UAISenseConfig_Hearing`).
-  - Implemented AI States (`Patrol`, `Investigate`, `Chase`, `Combat`, `TakeCover`, `Retreat`, `Flank`).
-  - Implemented Difficulty levels (`Easy`, `Normal`, `Hard`, `Expert`) adjusting sight radius, reaction time, and accuracy.
-- **Phase 9 Vehicles System**:
-  - Implemented `ABlackoutVehicleBase` Pawn with fuel, health (500), occupant seats (Driver, Passengers), enter/exit mechanics, and replication.
-  - Implemented specialized classes: `ABlackoutCar`, `ABlackoutMotorcycle` (leaning balance), `ABlackoutBoat` (buoyancy), and `ABlackoutHelicopter` (flight lift & hover).
-- **Phase 10 Inventory System**:
-  - Implemented `UBlackoutInventoryComponent` (Max 20 slots, 30kg capacity, item stacking, item removal, weight calculation).
-  - Implemented `ABlackoutLootItem` ground loot pickup actor.
-  - Implemented Item Types (`Weapon`, `Ammo`, `Attachment`, `Helmet`, `Vest`, `Healing`, `Throwable`).
-  - Configured Armor durability (Helmet & Vest) and Healing item consumption.
-  - Bound network replication across inventory items and armor durability.
+- **Phase 7 Game Modes**: TDM, FFA, Domination (Capture Zones), Search & Destroy, Battle Royale, Practice Mode.
+- **Phase 8 AI System**: AI Perception (Sight & Hearing), Controller, AI States, Difficulty (Easy, Normal, Hard, Expert), Squad AI.
+- **Phase 9 Vehicles System**: Cars, Motorcycles, Boats, Helicopters, Fuel/Health, Damage & Network Replication.
+- **Phase 10 Inventory System**: Backpack, Ground Loot, Weapon Attachments, Armor, Healing Items, Network Replication.
 
 ## [0.0.3] - 2026-07-27
 
 ### Added
-- **Phase 3 Camera System**: FPP, TPP (Left/Right Shoulder), Head Bob, Landing Shake, FOV interpolation, sensitivity settings.
-- **Phase 4 Combat System**: Weapon Base, Fire modes, Recoil, ADS, Reloading, Melee, Grenades, Health & Armor system.
-- **Phase 5 Multiplayer Framework**: GameMode, GameState, PlayerState, Session Subsystem, Network Replication.
-- **Phase 6 Maps & Environment Framework**: Level Data Assets, Spawn Points, Weather, Day/Night System.
-
-## [0.0.2] - 2026-07-27
-
-### Added
-- **Phase 2 Core Character System**: Base Character class, 13-state locomotion, Stances, Sliding, Vaulting, Climbing, AnimInstance.
-
-## [0.0.1] - 2026-07-27
-
-### Added
-- **Phase 1 Project Foundation**: Project descriptor, folder hierarchy, engine configs, platform targets, Git setup.
+- **Phase 3 Camera System**: FPP/TPP camera, Head bobbing, Landing shake, Sensitivity controls.
+- **Phase 4 Combat System**: Base weapon, Recoil, ADS, Reloading, Melee, Grenades, Health/Armor.
+- **Phase 5 Multiplayer Framework**: GameMode, GameState, PlayerState, Session Subsystem, Replication.
+- **Phase 6 Maps Framework**: Level Data Assets, Spawn Points, Weather, Day/Night system.

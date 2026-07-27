@@ -5,90 +5,77 @@ This document outlines the phased development plan for **Project Blackout**, an 
 ---
 
 ## Phase 1 — Project Foundation (Completed)
-- [x] Create project descriptor (`ProjectBlackout.uproject`).
-- [x] Configure complete C++ source and module build target infrastructure.
-- [x] Establish engine settings (Rendering, Physics, Collision, Input, Navigation, Audio, Networking, Packaging).
-- [x] Configure platform-specific targets (Windows, Android, iOS).
-- [x] Initialize Git repository & version control files (`.gitignore`, `LICENSE`, `README.md`).
-- [x] Build complete asset folder hierarchy in `Content/`.
+- [x] Project descriptor (`ProjectBlackout.uproject`).
+- [x] Source & module build target rules (`.Target.cs`, `.Build.cs`).
+- [x] Engine settings, multiplatform configuration, Git initialization.
 
 ---
 
-## Phase 2 — Core Character & Locomotion Systems (Completed)
-- [x] Implement FPP / TPP camera spring arm component with smooth transition logic.
+## Phase 2 — Core Character System (Completed)
 - [x] Base Tactical Character C++ class with 13-state locomotion state machine (`EBlackoutCharacterState`).
-- [x] Stances: Standing, Crouching, Prone, Crawling.
-- [x] Advanced movement: Sprinting, Sliding, Climbing, Vaulting.
-- [x] Custom Animation Instance `UBlackoutAnimInstance` & `ABlackoutPlayerController`.
+- [x] Stances, Sprinting, Sliding, Climbing, Vaulting.
 
 ---
 
 ## Phase 3 — Camera System (Completed)
-- [x] FPP (Head view) & TPP (Left/Right Shoulder) views.
-- [x] Camera Manager & Camera Component (`UBlackoutCameraComponent`).
-- [x] Procedural Head Bob, Landing Camera Shake, FOV interpolation.
-- [x] Camera collision probe & obstacle avoidance.
+- [x] FPP / TPP camera perspectives, head bob, landing shake, FOV zoom, camera collision probe.
 
 ---
 
 ## Phase 4 — Combat System (Completed)
-- [x] Weapon Base Class (`ABlackoutWeaponBase`) & Weapon Manager (`UBlackoutWeaponManagerComponent`).
-- [x] Fire Modes: Single, Burst, Automatic.
-- [x] Hitscan & Ballistic bullet trajectory mechanics.
-- [x] Damage System with Headshot (2.5x), Limb (0.75x) multipliers & Armor absorption (70%).
-- [x] Tactical & Empty Reloading, Vertical/Horizontal Recoil, ADS zoom.
-- [x] Melee Component (`UBlackoutMeleeComponent`) & Tactical Throwable Grenades (`ABlackoutThrowable`).
-- [x] Health & Armor System (`UBlackoutHealthComponent`).
+- [x] Weapon Base, Fire modes, Ballistics, Recoil, ADS, Reloading, Melee, Grenades, Health & Armor.
 
 ---
 
 ## Phase 5 — Multiplayer Framework (Completed)
-- [x] Dedicated Server GameMode (`ABlackoutGameMode`).
-- [x] Replicated GameState (`ABlackoutGameState`) & PlayerState (`ABlackoutPlayerState`).
-- [x] Network Session Manager (`UBlackoutSessionManager`).
-- [x] Network replication across Movement, Camera, Weapon States, and Health.
+- [x] Dedicated Server GameMode, GameState, PlayerState, Network Session Subsystem, Replication.
 
 ---
 
 ## Phase 6 — Maps & Environment Framework (Completed)
-- [x] Level Data Assets (`UBlackoutMapDataAsset`).
-- [x] Team Spawn System (`ABlackoutSpawnPoint`).
-- [x] Environmental System (`ABlackoutEnvironmentSystem`) for Day/Night cycles and Weather parameters.
+- [x] Level Data Assets, Spawn Points, Weather, Day/Night system.
 
 ---
 
 ## Phase 7 — Game Modes (Completed)
-- [x] Team Deathmatch (`ABlackoutGameMode_TDM`).
-- [x] Free For All (`ABlackoutGameMode_FFA`).
-- [x] Domination (`ABlackoutGameMode_Domination` & `ABlackoutCaptureZone`).
-- [x] Search & Destroy (`ABlackoutGameMode_SnD`).
-- [x] Battle Royale (`ABlackoutGameMode_BattleRoyale`).
-- [x] Practice Mode (`ABlackoutGameMode_Practice`).
+- [x] TDM, FFA, Domination (Capture Zones), Search & Destroy, Battle Royale, Practice Mode.
 
 ---
 
 ## Phase 8 — AI System (Completed)
-- [x] AI Controller (`ABlackoutAIController`) & AI Character (`ABlackoutAICharacter`).
-- [x] Perception System (`UAIPerceptionComponent`) with Sight & Hearing config.
-- [x] AI States: Patrol, Investigate, Chase, Combat, TakeCover, Retreat, Flank.
-- [x] Difficulty Settings: Easy, Normal, Hard, Expert.
+- [x] AI Controller & AI Character with Perception (Sight/Hearing), AI States, Difficulty Settings, Squad AI.
 
 ---
 
 ## Phase 9 — Vehicles (Completed)
-- [x] Vehicle Base Class (`ABlackoutVehicleBase`) with Fuel, Health, Occupants, and Replication.
-- [x] Specialized Vehicles: Cars (`ABlackoutCar`), Motorcycles (`ABlackoutMotorcycle`), Boats (`ABlackoutBoat`), Helicopters (`ABlackoutHelicopter`).
-- [x] Vehicle Damage & Destruction framework.
+- [x] Cars, Motorcycles, Boats, Helicopters, Fuel/Health, Damage & Network Replication.
 
 ---
 
 ## Phase 10 — Inventory System (Completed)
-- [x] Inventory Manager Component (`UBlackoutInventoryComponent`) & Storage Slots.
-- [x] Ground Loot Pickups (`ABlackoutLootItem`).
-- [x] Weapon Attachment Framework, Armor Durability (Helmets & Vests), and Healing Items.
-- [x] Network replication for inventory items and equipment.
+- [x] Inventory Manager, Ground Loot, Weapon Attachments, Armor, Healing, Throwables.
 
 ---
 
-## Phase 11 — UI, Audio, & Final Production Packaging (Upcoming)
-- [ ] Production build packaging for Windows, Google Play, and Apple App Store.
+## Phase 11 — Player Progression (Completed)
+- [x] Level System (1-100), XP Calculation, Competitive Ranking (Bronze to Grandmaster), Achievements, Daily Missions, Season Reset, Lifetime Stats.
+
+---
+
+## Phase 12 — Customization (Completed)
+- [x] Character Appearance (Face, Skin tone, Hair, Outfit), Weapon Skins, Emote Wheel, Loadouts (1-5), Player Profile card.
+
+---
+
+## Phase 13 — UI / UX (Completed)
+- [x] Main Menu, Tactical HUD, Minimap, Inventory UI, Settings Menu, Match Summary, Mobile Touch Control overlay.
+
+---
+
+## Phase 14 — Backend Services (Completed)
+- [x] Authentication (Register/Login/Token), Cloud Save Sync, Global/Regional Leaderboards, Match History logging, Payload MD5 Security.
+
+---
+
+## Phase 15 — Final Production Packaging & Optimization (Upcoming)
+- [ ] Shipping build packaging for Windows, Android, and iOS.
